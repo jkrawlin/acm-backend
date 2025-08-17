@@ -1,6 +1,7 @@
 require('dotenv').config(); // Load secrets (like api keys)
 const express = require('express'); // Tool for server
 const admin = require('firebase-admin'); // Tool for Firebase data
+const db = admin.firestore();
 const app = express(); // Start the mailbox
 app.use(express.json()); // Understand JSON letters
 
