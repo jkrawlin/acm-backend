@@ -1,5 +1,6 @@
 {
   "name": "acm-backend",
+  "type": "commonjs",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "dot": "^1.1.3",
+    "dotenv": "^17.2.1",
     "env": "^0.0.2",
     "express": "^5.1.0",
     "firebase-admin": "^13.4.0",
