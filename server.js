@@ -1,37 +1,38 @@
-require('dotenv').config(); // Load secrets (like api keys)
-const express = require('express'); // Tool for server
-const admin = require('firebase-admin'); // Tool for Firebase data
-const app = express(); // Start the mailbox
-app.use(express.json()); // Understand JSON letters
+require('dotenv').config(); // Load secrets
+const express = require('express');
+const admin = require('firebase-admin');
+const app = express();
+app.use(express.json());
 
-const serviceAccount = require('./acm-hub-cb8ea-firebase-adminsdk.json');
+const serviceAccount = {
+  projectId: process.env.PROJECT_ID,
+  clientEmail: process.env.CLIENT_EMAIL,
+  privateKey: process.env.PRIVATE_KEY.replace(/\\n/g, '\n')
+};
 
-// Initialize Firebase admin (use your key)
+// Initialize Firebase
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
-const db = admin.firestore(); // Connect to data safe
+const db = admin.firestore();
 
-// Login with code endpoint
+// Login endpoint
 app.post('/login-with-code', async (req, res) => {
-  const { code } = req.body; // Get code from app
+  const { code } = req.body;
   try {
-    const snapshot = await db.collection('customers').where('affiliateCode', '==', code).get(); // Check if code exists
+    const snapshot = await db.collection('customers').where('affiliateCode', '==', code).get();
     if (snapshot.empty) return res.status(400).json({ error: 'Invalid code' });
-    const data = snapshot.docs[0].data(); // Get balance/earnings
-    res.json({ success: true, balance: data.accountBalance, commission: data.commissionEarned }); // Send back
+    const data = snapshot.docs[0].data();
+    res.json({ success: true, balance: data.accountBalance, commission: data.commissionEarned });
   } catch (e) {
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-// For notifications (if using OneSignal or Twilio)
+// Notification endpoint
 app.post('/send-notification', async (req, res) => {
-  const { code, amount } = req.body; // Get from web update
-  // Use Twilio or OneSignal to send
+  const { code, amount } = req.body;
   res.json({ success: true });
 });
-
-// app.listen(3000, () => console.log('Local server running on 3000'));
 
 module.exports = app;
