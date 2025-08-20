@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load secrets
+require('dotenv').config();
 const express = require('express');
 const admin = require('firebase-admin');
 const app = express();
@@ -10,13 +10,11 @@ const serviceAccount = {
   privateKey: process.env.PRIVATE_KEY.replace(/\\n/g, '\n')
 };
 
-// Initialize Firebase
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 const db = admin.firestore();
 
-// Login endpoint
 app.post('/login-with-code', async (req, res) => {
   const { code } = req.body;
   try {
@@ -29,7 +27,6 @@ app.post('/login-with-code', async (req, res) => {
   }
 });
 
-// Notification endpoint
 app.post('/send-notification', async (req, res) => {
   const { code, amount } = req.body;
   res.json({ success: true });
