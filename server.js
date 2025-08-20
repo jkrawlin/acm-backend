@@ -32,4 +32,6 @@ app.post('/send-notification', async (req, res) => {
   res.json({ success: true });
 });
 
-app.listen(3000, () => console.log('Local server running on 3000')); // Start listening
+// app.listen(3000, () => console.log('Local server running on 3000')); // Start listening
+
+module.exports = app;
