@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "rewrites": [
     {
       "source": "/(.*)",
@@ -13,11 +14,5 @@
         { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" }
       ]
     }
-  ],
-  "functions": {
-    "server.js": {
-      "memory": 128,
-      "maxDuration": 10
-    }
-  }
+  ]
 }
