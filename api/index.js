@@ -16,8 +16,8 @@ const db = admin.firestore();
 const app = express();
 app.use(express.json());
 
-// Your routes here (unchanged)
-app.post('/api/login-with-code', async (req, res) => {
+// Your routes here (modified)
+app.post('/login-with-code', async (req, res) => {
   const { code } = req.body;
   try {
     const snapshot = await db.collection('customers').where('affiliateCode', '==', code).get();
@@ -29,7 +29,7 @@ app.post('/api/login-with-code', async (req, res) => {
   }
 });
 
-app.post('/api/send-notification', async (req, res) => {
+app.post('/send-notification', async (req, res) => {
   const { code, amount } = req.body;
   res.json({ success: true });
 });
